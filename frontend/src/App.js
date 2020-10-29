@@ -1,7 +1,18 @@
+import Header from './components/Header'
+import Footer from './components/Footer'
+import { Container } from 'react-bootstrap' // Container helps with placement.
+
 const App = () => {
   return (
     <>
-      <h1>Welcome to ProShop</h1>
+      <Header />
+      {/* py-3 class below gives padding */}
+      <main className='py-3'>
+        <Container>
+          <h1>Welcome to ProShop</h1>
+        </Container>
+      </main>
+      <Footer />
     </>
   )
 }
