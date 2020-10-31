@@ -1,19 +1,20 @@
 import { Card } from 'react-bootstrap'
+import { Link } from 'react-router-dom' // use Link instead of a tags to prevent refreshing on click
 import Rating from './Rating'
 
 // product is wrapped in curly braces below to pull the name directly from props, so you don't have to call props.product every time
 const Product = ({ product }) => {
   return (
     <Card className='my-3 p-3 rounded'>
-      <a href={`/product/${product._id}`}>
+      <Link to={`/product/${product._id}`}>
         <Card.Img src={product.image} variant='top' />
-      </a>
+      </Link>
       <Card.Body>
-        <a href={`/product/${product._id}`}>
+        <Link to={`/product/${product._id}`}>
           <Card.Title as='div'>
             <strong>{product.name}</strong>
           </Card.Title>
-        </a>
+        </Link>
         <Card.Text as='div'>
           <Rating
             value={product.rating}
