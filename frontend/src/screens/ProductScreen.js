@@ -12,14 +12,14 @@ const ProductScreen = ({ match }) => {
     // better to use async await than .then. read this for why https://stackoverflow.com/a/54497100/13371788
     // can't directly call async on useEffect so we have to make a new variable
     const fetchProduct = async () => {
-      const { data } = await axios.get(`api/products/${match.params.id}`) // we added a proxy to frontend's package.json to prevent cors errors
+      const { data } = await axios.get(`/api/products/${match.params.id}`) // we added a proxy to frontend's package.json to prevent cors errors
       // id is a param from the url accessed by the match object
       // data is destructured above so we can call it directly for below instead of doing res.data all the time. this is optional.
       setProduct(data)
       // now we set that data to the state of this component
     }
     fetchProduct() // now just call it
-  }, [match.params.id]) // this is an array of dependencies. anything u want to fire useEffect off when it changes gets put in there.
+  }, [match]) // this is an array of dependencies. anything u want to fire useEffect off when it changes gets put in there.
 
   return (
     <>
