@@ -1,6 +1,6 @@
-const express = require('express') // require is common node syntax
-const dotenv = require('dotenv') // dependency used to separate secrets from your source code. MAKE SURE .env IS IN .gitignore
-const products = require('./data/products')
+import express from 'express' // changed require to import from ecmascript. added "type": "module" to package.json to make it work. docs -> https://nodejs.org/api/esm.html
+import dotenv from 'dotenv' // dependency used to separate secrets from your source code. MAKE SURE .env IS IN .gitignore
+import products from './data/products.js'
 
 dotenv.config() // this is just reu=quired to be able to run dotenv
 

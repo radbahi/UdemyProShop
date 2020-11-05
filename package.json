@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "https://www.udemy.com/course/mern-ecommerce/learn/lecture/22484790#questions",
   "main": "server.js",
+  "type": "module",
   "scripts": {
     "start": "node backend/server",
     "server": "nodemon backend/server",

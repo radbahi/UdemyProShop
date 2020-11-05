@@ -81,6 +81,5 @@ const products = [
   },
 ]
 
-// module.exports was originally "export default products" but since we don't have ur backend setup for es modules yet we write module.exports
-// module.exports is common js syntax
-module.exports = products
+// module.exports is common js syntax but we changed it to export default to fit ecmascript
+export default products
