@@ -21,3 +21,5 @@ app.get('/api/products/:id', (req, res) => {
 
 app.listen(5000, console.log('Server running on port 5000')) // normally "node backend/server" to start server but we have a start script in root package.json
 // now we can run our server with just "npm start"
+
+// nodemon and concurrently have been installed as dev dependencies and have scripts you should check out in package.json
