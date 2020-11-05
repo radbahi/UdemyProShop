@@ -1,5 +1,8 @@
 const express = require('express') // require is common node syntax
+const dotenv = require('dotenv') // dependency used to separate secrets from your source code. MAKE SURE .env IS IN .gitignore
 const products = require('./data/products')
+
+dotenv.config() // this is just reu=quired to be able to run dotenv
 
 const app = express()
 
@@ -19,7 +22,12 @@ app.get('/api/products/:id', (req, res) => {
   res.json(product)
 })
 
-app.listen(5000, console.log('Server running on port 5000')) // normally "node backend/server" to start server but we have a start script in root package.json
+const PORT = process.env.PORT || 5000 // process.env gets the value of that variable. if not found, default to 5000
+
+app.listen(
+  PORT,
+  console.log(`Server running in ${process.env.NODE_ENV} on port ${PORT}`)
+) // normally "node backend/server" to start server but we have a start script in root package.json
 // now we can run our server with just "npm start"
 
 // nodemon and concurrently have been installed as dev dependencies and have scripts you should check out in package.json
