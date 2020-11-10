@@ -1,8 +1,11 @@
 import express from 'express' // changed require to import from ecmascript. added "type": "module" to package.json to make it work. docs -> https://nodejs.org/api/esm.html
 import dotenv from 'dotenv' // dependency used to separate secrets from your source code. MAKE SURE .env IS IN .gitignore
+import connectDB from './config/db.js'
 import products from './data/products.js'
 
 dotenv.config() // this is just reu=quired to be able to run dotenv
+
+connectDB()
 
 const app = express()
 
@@ -31,3 +34,4 @@ app.listen(
 // now we can run our server with just "npm start"
 
 // nodemon and concurrently have been installed as dev dependencies and have scripts you should check out in package.json
+// mongodb compass has /proshop instead of /test in the end of the connection url
