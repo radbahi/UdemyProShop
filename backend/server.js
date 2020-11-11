@@ -1,7 +1,7 @@
 import express from 'express' // changed require to import from ecmascript. added "type": "module" to package.json to make it work. docs -> https://nodejs.org/api/esm.html
 import dotenv from 'dotenv' // dependency used to separate secrets from your source code. MAKE SURE .env IS IN .gitignore
 import connectDB from './config/db.js'
-import products from './data/products.js'
+import productRoutes from './routes/productRoutes.js'
 
 dotenv.config() // this is just reu=quired to be able to run dotenv
 
@@ -14,16 +14,7 @@ app.get('/', (req, res) => {
   res.send('API is running...')
 })
 
-app.get('/api/products', (req, res) => {
-  res.json(products)
-  // products isn't actually a json file but res.json converts it to be json
-})
-
-app.get('/api/products/:id', (req, res) => {
-  const product = products.find((p) => p._id === req.params.id)
-  // req.params.id gets its value from the url
-  res.json(product)
-})
+app.use('/api/products', productRoutes)
 
 const PORT = process.env.PORT || 5000 // process.env gets the value of that variable. if not found, default to 5000
 
