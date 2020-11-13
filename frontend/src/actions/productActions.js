@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 export const listProducts = () => async (dispatch) => {
+  //listProducts gets fired off in homescreen component
   try {
     dispatch({ type: 'PRODUCT_LIST_REQUEST' }) //this calls in the reducer to set loading: true and products: []
     const { data } = await axios.get('/api/products')
