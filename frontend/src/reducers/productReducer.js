@@ -19,4 +19,22 @@ export const productListReducer = (state = { products: [] }, action) => {
   }
 }
 
+export const productDetailsReducer = (
+  state = { product: { reviews: [] } },
+  action
+) => {
+  switch (
+    action.type // this is where the reducer does things according to each type.
+  ) {
+    case 'PRODUCT_DETAILS_REQUEST':
+      return { loading: true, ...state } //pass in whatever's currently in the state. not sure if we really need to do this but whatever
+    case 'PRODUCT_DETAILS_SUCCESS':
+      return { loading: false, product: action.payload } //we send this once the data is fetched. remember that payload = data.
+    case 'PRODUCT_DETAILS_FAIL':
+      return { loading: false, error: action.payload }
+    default:
+      //always have a default
+      return state
+  }
+}
 // once the reducer is done, we add it to the store

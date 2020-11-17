@@ -3,11 +3,15 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk' //a middleware that lets you call action creators that return a function instead of an action object.
 import { composeWithDevTools } from 'redux-devtools-extension'
-import { productListReducer } from './reducers/productReducer.js'
+import {
+  productListReducer,
+  productDetailsReducer,
+} from './reducers/productReducer.js'
 
 const reducer = combineReducers({
   // A reducer is a function that determines changes to an application’s state. It uses the action it receives to determine this change.
-  productList: productListReducer, //the productList part of the state then gets the data from productListReducer
+  productList: productListReducer, //the productList part of the state then gets the data from productListReducer...
+  productDetails: productDetailsReducer, //...as well as anything else passed in here
 })
 
 const initialState = {}
