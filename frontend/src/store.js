@@ -6,15 +6,23 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import {
   productListReducer,
   productDetailsReducer,
-} from './reducers/productReducer.js'
+} from './reducers/productReducers.js'
+import { cartReducer } from './reducers/cartReducers.js'
 
 const reducer = combineReducers({
   // A reducer is a function that determines changes to an application’s state. It uses the action it receives to determine this change.
   productList: productListReducer, //the productList part of the state then gets the data from productListReducer...
   productDetails: productDetailsReducer, //...as well as anything else passed in here
+  cart: cartReducer,
 })
 
-const initialState = {}
+//we get cart items from localstorage below...
+const cartItemsFromStorage = localStorage.getItem('cartItems')
+  ? JSON.parse(localStorage.getItem('cartItems'))
+  : []
+
+//...then pass to initial state
+const initialState = { cart: { cartItems: cartItemsFromStorage } }
 
 const middleware = [thunk]
 
