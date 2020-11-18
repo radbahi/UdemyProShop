@@ -17,7 +17,7 @@ import { listProductDetails } from '../actions/productActions'
 
 const ProductScreen = ({ history, match }) => {
   // history used to redirect url
-  const [qty, setQty] = useState(0) //component level state for quantity selection of the product to purchase
+  const [qty, setQty] = useState(1) //component level state for quantity selection of the product to purchase
 
   const dispatch = useDispatch()
 
