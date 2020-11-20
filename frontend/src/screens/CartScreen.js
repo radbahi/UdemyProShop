@@ -37,6 +37,11 @@ const CartScreen = ({ match, location, history }) => {
     console.log('removed')
   }
 
+  const checkoutHandler = () => {
+    history.push('/login?redirect=shipping')
+    //this url contains logic. if theyre logged in, redirect to shipping.
+  }
+
   return (
     <Row>
       <Col md={8}>
@@ -94,8 +99,33 @@ const CartScreen = ({ match, location, history }) => {
           </ListGroup>
         )}
       </Col>
-      <Col md={2}></Col>
-      <Col md={2}></Col>
+      <Col md={2}>
+        <Card>
+          <ListGroup variant='flush'>
+            <ListGroupItem>
+              {/* reduce is used to add up the quantity of all the items in the cart */}
+              <h2>
+                Subtotal ({cartItems.reduce((acc, item) => acc + item.qty, 0)})
+                items
+              </h2>
+              {/* toFixed adds two decimals */}$
+              {cartItems
+                .reduce((acc, item) => acc + item.qty * item.price, 0)
+                .toFixed(2)}
+            </ListGroupItem>
+            <ListGroupItem>
+              <Button
+                type='button'
+                className='btn-block'
+                disabled={cartItems.length === 0}
+                onClick={checkoutHandler}
+              >
+                Proceed to Checkout
+              </Button>
+            </ListGroupItem>
+          </ListGroup>
+        </Card>
+      </Col>
     </Row>
   )
 }
