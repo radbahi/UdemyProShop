@@ -18,7 +18,7 @@ export const cartReducer = (state = { cartItems: [] }, action) => {
           ), //don't understand this. this is practically the same logic as existItem. come back to this.
         }
       } else {
-        return { ...state, cartItems: [...state.cartItems, item] }
+        return { ...state, cartItems: [...state.cartItems, action.payload] }
       }
     default:
       return state
