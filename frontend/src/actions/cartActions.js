@@ -19,3 +19,11 @@ export const addToCart = (id, qty) => async (dispatch, getState) => {
   localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems)) //save the cart to localstorage. we stringify it cuz localstorage only saves strings. we later parse it back to JSON to use with javascript.
   //we take the localstorage cart items data in the initial state in store.js
 }
+
+export const removeFromCart = (id) => (dispatch, getState) => {
+  dispatch({
+    type: 'CART_REMOVE_ITEM',
+    payload: id,
+  })
+  localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems))
+}
