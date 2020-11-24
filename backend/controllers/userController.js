@@ -1,5 +1,6 @@
 // we previously had everything in the routes files but routes should only handle methods. controllers should handle functionality. \
 import asyncHandler from 'express-async-handler' // library for error handling for express async methods
+import generateToken from '../utils/generateToken.js' // bringing this in to generate an auth token
 import User from '../models/userModel.js'
 
 //@desc auth user and get token
@@ -17,7 +18,8 @@ const authUser = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
-      token: null,
+      token: generateToken(user._id),
+      // remember that we made the generateToken function accept the userid as an argument
     })
   } else {
     res.status(401)
