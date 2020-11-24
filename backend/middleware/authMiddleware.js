@@ -7,7 +7,7 @@ const protect = asyncHandler(async (req, res, next) => {
   //token gets defined if there's an auth header
   if (
     req.headers.authorization &&
-    req.headers.authorization.startsWith('Bearer') // WHY DO WE WANT BEARER IN THE TOKEN??
+    req.headers.authorization.startsWith('Bearer') // WHY DO WE WANT BEARER IN THE TOKEN?? https://www.udemy.com/course/mern-ecommerce/learn/lecture/22494388#questions
   ) {
     try {
       token = req.headers.authorization.split(' ')[1] // token comes through as "Bearer token" so split the space into array and get token element
