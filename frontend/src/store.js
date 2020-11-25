@@ -8,13 +8,20 @@ import {
   productDetailsReducer,
 } from './reducers/productReducers.js'
 import { cartReducer } from './reducers/cartReducers.js'
+import { userLoginReducer } from './reducers/userReducers.js'
 
 const reducer = combineReducers({
   // A reducer is a function that determines changes to an application’s state. It uses the action it receives to determine this change.
   productList: productListReducer, //the productList part of the state then gets the data from productListReducer...
   productDetails: productDetailsReducer, //...as well as anything else passed in here
   cart: cartReducer,
+  userLogin: userLoginReducer,
 })
+
+//this checks if there's any user info saved to local storage. if there isn't, just send null
+const userInfoFromStorage = localStorage.getItem('userInfo')
+  ? JSON.parse(localStorage.getItem('userInfo'))
+  : null
 
 //we get cart items from localstorage below...
 const cartItemsFromStorage = localStorage.getItem('cartItems')
@@ -22,7 +29,10 @@ const cartItemsFromStorage = localStorage.getItem('cartItems')
   : []
 
 //...then pass to initial state
-const initialState = { cart: { cartItems: cartItemsFromStorage } }
+const initialState = {
+  cart: { cartItems: cartItemsFromStorage },
+  userLogin: { userInfo: userInfoFromStorage },
+}
 
 const middleware = [thunk]
 
