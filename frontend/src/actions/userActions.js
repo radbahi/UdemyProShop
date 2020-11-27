@@ -28,3 +28,8 @@ export const login = (email, password) => async (dispatch) => {
     }) //the payload here checks for our custom message. if it exists, send the custom message, if not, send generic message}
   }
 }
+
+export const logout = () => (dispatch) => {
+  localStorage.removeItem('userInfo') // whats the point of using both localStorage and redux state???
+  dispatch({ type: 'USER_LOGOUT' })
+}
