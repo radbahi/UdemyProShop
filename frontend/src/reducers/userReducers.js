@@ -54,3 +54,19 @@ export const userDetailsReducer = (state = { user: {} }, action) => {
       return state
   }
 }
+
+export const userUpdateProfileReducer = (state = { user: {} }, action) => {
+  switch (
+    action.type // this is where the reducer does things according to each type.
+  ) {
+    case 'USER_UPDATE_PROFILE_REQUEST':
+      return { loading: true } //we send loading: true to let the component know it's fetching the data
+    case 'USER_UPDATE_PROFILE_SUCCESS':
+      return { loading: false, success: true, user: action.payload } //we send this once the data is fetched. remember that payload = data.
+    case 'USER_UPDATE_PROFILE_FAIL':
+      return { loading: false, error: action.payload }
+    default:
+      //always have a default
+      return state
+  }
+}

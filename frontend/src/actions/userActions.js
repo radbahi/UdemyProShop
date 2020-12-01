@@ -95,3 +95,34 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
     }) //the payload here checks for our custom message. if it exists, send the custom message, if not, send generic message}
   }
 }
+
+export const updateUserProfile = (user) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: 'USER_UPDATE_PROFILE_REQUEST',
+    })
+
+    const {
+      userLogin: { userInfo },
+    } = getState() // we destructure two levels in to get userInfo, which is the logged in user's object
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    } //we want to send this as a header.
+
+    const { data } = await axios.put(`/api/users/profile`, user, config) //pass the id into this route as well as the config and extract data
+
+    dispatch({ type: 'USER_UPDATE_PROFILE_SUCCESS', payload: data })
+  } catch (error) {
+    dispatch({
+      type: 'USER_ UPDATE_PROFILE_FAIL',
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    }) //the payload here checks for our custom message. if it exists, send the custom message, if not, send generic message}
+  }
+}

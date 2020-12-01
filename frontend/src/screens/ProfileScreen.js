@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Form, Button, Row, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import { getUserDetails } from '../actions/userActions.js'
+import { getUserDetails, updateUserProfile } from '../actions/userActions.js'
 
 const ProfileScreen = ({ location, history }) => {
   const [name, setName] = useState('')
@@ -19,19 +19,20 @@ const ProfileScreen = ({ location, history }) => {
     if (password !== confirmPassword) {
       setMessage('Passwords do not match')
     } else {
-      //DISPATCH UPDATE PROFILE
+      dispatch(updateUserProfile({ id: user._id, name, email, password })) //this is the user object we want to pass into the reducer
     }
   }
 
   const dispatch = useDispatch()
 
   const userDetails = useSelector((state) => state.userDetails) //grab userDetails which gets its data from userDetailsReducer...
-
   const { loading, error, user } = userDetails //...then deconstruct and get these from the state
 
   const userLogin = useSelector((state) => state.userLogin) //grab userLogin which gets its data from userLoginReducer...
-
   const { userInfo } = userLogin //...then deconstruct and get these from the state. We bring this in to check if user is logged in
+
+  const userUpdateProfile = useSelector((state) => state.userUpdateProfile) //grab userUpdateProfile which gets its data from userUpdateProfileReducer...
+  const { success } = userUpdateProfile //...then deconstruct and get these from the state. We bring this in to check if user is logged in
 
   useEffect(() => {
     if (!userInfo) {
@@ -54,7 +55,12 @@ const ProfileScreen = ({ location, history }) => {
           <h2 style={{ color: 'red', backgroundColor: 'yellow' }}>{message}</h2>
         )}
         {error && (
-          <h2 style={{ color: 'red', backgroundColor: 'yellow' }}>{error}</h2>
+          <h2 style={{ color: 'red', backgroundColor: 'yellow' }}>{error}</h2> //NEED TO MAKE THESE MESSAGES TIME OUT
+        )}
+        {success && (
+          <h2 style={{ color: 'darkgreen', backgroundColor: 'lightgreen' }}>
+            Profile updated
+          </h2>
         )}
         {loading && <h1>Loading...</h1>}
         <Form onSubmit={submitHandler}>
