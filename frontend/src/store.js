@@ -8,7 +8,10 @@ import {
   productDetailsReducer,
 } from './reducers/productReducers.js'
 import { cartReducer } from './reducers/cartReducers.js'
-import { userLoginReducer } from './reducers/userReducers.js'
+import {
+  userLoginReducer,
+  userRegisterReducer,
+} from './reducers/userReducers.js'
 
 const reducer = combineReducers({
   // A reducer is a function that determines changes to an application’s state. It uses the action it receives to determine this change.
@@ -16,6 +19,7 @@ const reducer = combineReducers({
   productDetails: productDetailsReducer, //...as well as anything else passed in here
   cart: cartReducer,
   userLogin: userLoginReducer,
+  userRegister: userRegisterReducer,
 })
 
 //this checks if there's any user info saved to local storage. if there isn't, just send null
