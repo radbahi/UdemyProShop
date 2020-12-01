@@ -11,6 +11,7 @@ import { cartReducer } from './reducers/cartReducers.js'
 import {
   userLoginReducer,
   userRegisterReducer,
+  userDetailsReducer,
 } from './reducers/userReducers.js'
 
 const reducer = combineReducers({
@@ -20,6 +21,7 @@ const reducer = combineReducers({
   cart: cartReducer,
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
+  userDetails: userDetailsReducer,
 })
 
 //this checks if there's any user info saved to local storage. if there isn't, just send null

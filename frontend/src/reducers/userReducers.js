@@ -36,3 +36,21 @@ export const userRegisterReducer = (state = {}, action) => {
       return state
   }
 }
+
+//userDetails is for the profile view screen
+// the initial state here is an empty user object
+export const userDetailsReducer = (state = { user: {} }, action) => {
+  switch (
+    action.type // this is where the reducer does things according to each type.
+  ) {
+    case 'USER_DETAILS_REQUEST':
+      return { ...state, loading: true } //we send loading: true to let the component know it's fetching the data. not sure why passing in whole state here is necessary
+    case 'USER_DETAILS_SUCCESS':
+      return { loading: false, user: action.payload } //we send this once the data is fetched. remember that payload = data.
+    case 'USER_DETAILS_FAIL':
+      return { loading: false, error: action.payload }
+    default:
+      //always have a default
+      return state
+  }
+}
