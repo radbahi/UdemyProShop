@@ -3,7 +3,10 @@
 // payload is data fetched from the server.
 // the initial state for the reducer below is an empty cartItems array.
 
-export const cartReducer = (state = { cartItems: [] }, action) => {
+export const cartReducer = (
+  state = { cartItems: [], shippingAddress: {} },
+  action
+) => {
   switch (action.type) {
     case 'CART_ADD_ITEM':
       //existItem added to check if the item is already in the cart
@@ -24,6 +27,11 @@ export const cartReducer = (state = { cartItems: [] }, action) => {
       return {
         ...state,
         cartItems: state.cartItems.filter((x) => x.product !== action.payload), //filter keeps in any product that doesn't match payload
+      }
+    case 'CART_SAVE_SHIPPING_ADDRESS':
+      return {
+        ...state,
+        shippingAddress: action.payload,
       }
     default:
       return state
