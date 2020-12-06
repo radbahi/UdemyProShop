@@ -6,7 +6,7 @@ import productRoutes from './routes/productRoutes.js'
 import userRoutes from './routes/userRoutes.js'
 import orderRoutes from './routes/orderRoutes.js'
 
-dotenv.config() // this is just reu=quired to be able to run dotenv
+dotenv.config() // this is just required to be able to run dotenv
 
 connectDB()
 
