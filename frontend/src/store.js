@@ -14,7 +14,10 @@ import {
   userDetailsReducer,
   userUpdateProfileReducer,
 } from './reducers/userReducers.js'
-import { orderCreateReducer } from './reducers/orderReducers.js'
+import {
+  orderCreateReducer,
+  orderDetailsReducer,
+} from './reducers/orderReducers.js'
 
 const reducer = combineReducers({
   // A reducer is a function that determines changes to an application’s state. It uses the action it receives to determine this change.
@@ -26,6 +29,7 @@ const reducer = combineReducers({
   userDetails: userDetailsReducer,
   userUpdateProfile: userUpdateProfileReducer,
   orderCreate: orderCreateReducer,
+  orderDetails: orderDetailsReducer,
 })
 
 //this checks if there's any user info saved to local storage. if there isn't, just send null

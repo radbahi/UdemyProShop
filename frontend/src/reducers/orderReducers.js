@@ -10,3 +10,20 @@ export const orderCreateReducer = (state = {}, action) => {
       return state
   }
 }
+
+export const orderDetailsReducer = (
+  state = { orderItems: [], shippingAddress: {} },
+  action
+) => {
+  switch (action.type) {
+    case 'ORDER_DETAILS_REQUEST':
+      //passing in state below prevents us from getting errors while it loads. don't know why we didn't do it for every other reducer
+      return { ...state, loading: true }
+    case 'ORDER_DETAILS_SUCCESS':
+      return { loading: false, order: action.payload }
+    case 'ORDER_DETAILS_FAIL':
+      return { loading: false, errpr: action.payload }
+    default:
+      return state
+  }
+}
