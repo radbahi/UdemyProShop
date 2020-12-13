@@ -1,8 +1,7 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { Row, Col, ListGroup, Image, Card, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import FormContainer from '../components/FormContainer'
 import CheckoutSteps from '../components/CheckoutSteps'
 import { createOrder } from '../actions/orderActions'
 
@@ -19,7 +18,7 @@ const PlaceOrderScreen = ({ history }) => {
 
   cart.shippingPrice = cart.itemsPrice > 100 ? 0 : 100
 
-  cart.taxPrice = Number((0.15 * cart.itemsPrice).toFixed(2)) //find an easier way to add 2 decimals no matter what
+  cart.taxPrice = Number((0.15 * cart.itemsPrice).toFixed(2))
 
   cart.totalPrice = (
     Number(cart.itemsPrice) +
