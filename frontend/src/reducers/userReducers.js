@@ -49,6 +49,8 @@ export const userDetailsReducer = (state = { user: {} }, action) => {
       return { loading: false, user: action.payload } //we send this once the data is fetched. remember that payload = data.
     case 'USER_DETAILS_FAIL':
       return { loading: false, error: action.payload }
+    case 'USER_DETAILS_RESET':
+      return { user: {} }
     default:
       //always have a default
       return state
