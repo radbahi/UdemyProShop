@@ -58,14 +58,31 @@ export const userDetailsReducer = (state = { user: {} }, action) => {
 }
 
 export const userUpdateProfileReducer = (state = { user: {} }, action) => {
+  //this was refactored to remove empty user object as default.
   switch (
     action.type // this is where the reducer does things according to each type.
   ) {
     case 'USER_UPDATE_PROFILE_REQUEST':
       return { loading: true } //we send loading: true to let the component know it's fetching the data
     case 'USER_UPDATE_PROFILE_SUCCESS':
-      return { loading: false, success: true, user: action.payload } //we send this once the data is fetched. remember that payload = data.
+      return { loading: false, success: true, user: action.payload } //this was refactored to rename user as userInfo
     case 'USER_UPDATE_PROFILE_FAIL':
+      return { loading: false, error: action.payload }
+    default:
+      //always have a default
+      return state
+  }
+}
+
+export const userListReducer = (state = { users: [] }, action) => {
+  switch (
+    action.type // this is where the reducer does things according to each type.
+  ) {
+    case 'USER_LIST_REQUEST':
+      return { loading: true } //we send loading: true to let the component know it's fetching the data
+    case 'USER_LIST_SUCCESS':
+      return { loading: false, users: action.payload } //we send this once the data is fetched. remember that payload = data.
+    case 'USER_LIST_FAIL':
       return { loading: false, error: action.payload }
     default:
       //always have a default

@@ -106,21 +106,60 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
 
     const {
       userLogin: { userInfo },
-    } = getState() // we destructure two levels in to get userInfo, which is the logged in user's object
+    } = getState()
 
     const config = {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${userInfo.token}`,
       },
-    } //we want to send this as a header.
+    }
 
-    const { data } = await axios.put(`/api/users/profile`, user, config) //pass the id into this route as well as the config and extract data
+    const { data } = await axios.put(`/api/users/profile`, user, config)
 
-    dispatch({ type: 'USER_UPDATE_PROFILE_SUCCESS', payload: data })
+    dispatch({
+      type: 'USER_UPDATE_PROFILE_SUCCESS',
+      payload: data,
+    })
+    dispatch({
+      type: 'USER_LOGIN_SUCCESS',
+      payload: data,
+    })
+    localStorage.setItem('userInfo', JSON.stringify(data))
   } catch (error) {
     dispatch({
       type: 'USER_UPDATE_PROFILE_FAIL',
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    })
+  }
+}
+
+export const listUsers = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: 'USER_LIST_REQUEST',
+    })
+
+    const {
+      userLogin: { userInfo },
+    } = getState() // we destructure two levels in to get userInfo, which is the logged in user's object
+
+    const config = {
+      headers: {
+        // removed content-type here
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    } //we want to send this as a header.
+
+    const { data } = await axios.get(`/api/users/`, config) //pass the id into this route as well as the config and extract data
+
+    dispatch({ type: 'USER_LIST_SUCCESS', payload: data })
+  } catch (error) {
+    dispatch({
+      type: 'USER_LIST_FAIL',
       payload:
         error.response && error.response.data.message
           ? error.response.data.message
