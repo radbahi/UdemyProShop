@@ -78,7 +78,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
 //@route PUT /api/users/profile
 //@access private
 const updateUserProfile = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user._id)
+  const user = await User.findById(req.user._id) // req.user._id comes from the LOGGED IN user
   if (user) {
     user.name = req.body.name || user.name
     user.email = req.body.email || user.email
@@ -114,10 +114,46 @@ const getUsers = asyncHandler(async (req, res) => {
 //@route DELETE /api/users/:id
 //@access private/admin
 const deleteUser = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.params.id)
+  const user = await User.findById(req.params.id) // remember that params.id comes from the url, not straight from the model
   if (user) {
     await user.remove()
     res.json({ message: 'User removed' })
+  } else {
+    res.status(404)
+    throw new Error('User not found')
+  }
+})
+
+//@desc get user by id
+//@route GET /api/users/:id
+//@access private/admin
+const getUserById = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id).select('-password') // remember that params.id comes from the url, not straight from the model
+  if (user) {
+    res.json(user)
+  } else {
+    throw new Error('User not found')
+  }
+})
+
+//@desc update user
+//@route PUT /api/users/:id
+//@access private/admin
+const updateUser = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id)
+  if (user) {
+    user.name = req.body.name || user.name
+    user.email = req.body.email || user.email
+    user.isAdmin = req.body.isAdmin
+
+    const updatedUser = await user.save()
+
+    res.json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      isAdmin: updatedUser.isAdmin,
+    })
   } else {
     res.status(404)
     throw new Error('User not found')
@@ -131,4 +167,6 @@ export {
   updateUserProfile,
   getUsers,
   deleteUser,
+  getUserById,
+  updateUser,
 }

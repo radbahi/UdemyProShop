@@ -1,4 +1,5 @@
 import express from 'express'
+import { protect, admin } from '../middleware/authMiddleware.js'
 import {
   authUser,
   getUserProfile,
@@ -6,16 +7,25 @@ import {
   updateUserProfile,
   getUsers,
   deleteUser,
+  getUserById,
+  updateUser,
 } from '../controllers/userController.js'
-import { protect, admin } from '../middleware/authMiddleware.js'
+
 const router = express.Router()
 
 router.post('/login', authUser) // /login is hooked to /api/users
+
 router
   .route('/profile')
   .get(protect, getUserProfile)
-  .put(protect, updateUserProfile) //.route method used for doing more than one verb?
-router.route('/').post(registerUser).get(protect, admin, getUsers) // or maybe its to use imported functions?
-router.route('/:id').delete(protect, admin, deleteUser) // or maybe its to use imported functions?
+  .put(protect, updateUserProfile) //.route method used for doing more than one verb
+
+router.route('/').post(registerUser).get(protect, admin, getUsers)
+
+router
+  .route('/:id')
+  .delete(protect, admin, deleteUser)
+  .get(protect, admin, getUserById)
+  .put(protect, admin, updateUser)
 
 export default router
