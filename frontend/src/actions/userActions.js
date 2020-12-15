@@ -186,12 +186,44 @@ export const deleteUser = (id) => async (dispatch, getState) => {
       },
     } //we want to send this as a header.
 
-    const { data } = await axios.delete(`/api/users/${id}`, config) //pass the id into this route as well as the config and extract data
+    await axios.delete(`/api/users/${id}`, config) //pass the id into this route as well as the config and extract data
 
     dispatch({ type: 'USER_DELETE_SUCCESS' })
   } catch (error) {
     dispatch({
       type: 'USER_DELETE_FAIL',
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    }) //the payload here checks for our custom message. if it exists, send the custom message, if not, send generic message}
+  }
+}
+
+export const updateUser = (user) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: 'USER_UPDATE_REQUEST',
+    })
+
+    const {
+      userLogin: { userInfo },
+    } = getState() // we destructure two levels in to get userInfo, which is the logged in user's object
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    } //we want to send this as a header.
+
+    const { data } = await axios.put(`/api/users/${user._id}`, user, config) //pass the id into this route as well as the config and extract data
+
+    dispatch({ type: 'USER_UPDATE_SUCCESS' })
+    dispatch({ type: 'USER_DETAILS_SUCCESS', payload: data })
+  } catch (error) {
+    dispatch({
+      type: 'USER_UPDATE_FAIL',
       payload:
         error.response && error.response.data.message
           ? error.response.data.message
