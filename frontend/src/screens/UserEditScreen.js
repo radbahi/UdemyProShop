@@ -48,8 +48,7 @@ const UserEditScreen = ({ match, history }) => {
 
   return (
     <>
-      {/* Link to does not work as intended */}
-      <Link to='admin/userlist' className='btn btn-light my-3'>
+      <Link to='/admin/userlist' className='btn btn-light my-3'>
         Go back
       </Link>
       <FormContainer>

@@ -6,6 +6,7 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import {
   productListReducer,
   productDetailsReducer,
+  productDeleteReducer,
 } from './reducers/productReducers.js'
 import { cartReducer } from './reducers/cartReducers.js'
 import {
@@ -28,6 +29,7 @@ const reducer = combineReducers({
   // A reducer is a function that determines changes to an application’s state. It uses the action it receives to determine this change.
   productList: productListReducer, //the productList part of the state then gets the data from productListReducer...
   productDetails: productDetailsReducer, //...as well as anything else passed in here
+  productDelete: productDeleteReducer,
   cart: cartReducer,
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
