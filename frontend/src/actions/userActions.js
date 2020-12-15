@@ -32,6 +32,7 @@ export const login = (email, password) => async (dispatch) => {
 export const logout = () => (dispatch) => {
   localStorage.removeItem('userInfo') // whats the point of using both localStorage and redux state???
   dispatch({ type: 'USER_LOGOUT' })
+  dispatch({ type: 'USER_LIST_RESET' })
   dispatch({ type: 'USER_DETAILS_RESET' })
   dispatch({ type: 'ORDER_LIST_MY_RESET' })
 }
@@ -160,6 +161,37 @@ export const listUsers = () => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: 'USER_LIST_FAIL',
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    }) //the payload here checks for our custom message. if it exists, send the custom message, if not, send generic message}
+  }
+}
+
+export const deleteUser = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: 'USER_DELETE_REQUEST',
+    })
+
+    const {
+      userLogin: { userInfo },
+    } = getState() // we destructure two levels in to get userInfo, which is the logged in user's object
+
+    const config = {
+      headers: {
+        // removed content-type here
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    } //we want to send this as a header.
+
+    const { data } = await axios.delete(`/api/users/${id}`, config) //pass the id into this route as well as the config and extract data
+
+    dispatch({ type: 'USER_DELETE_SUCCESS' })
+  } catch (error) {
+    dispatch({
+      type: 'USER_DELETE_FAIL',
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

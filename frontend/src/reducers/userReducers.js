@@ -84,6 +84,24 @@ export const userListReducer = (state = { users: [] }, action) => {
       return { loading: false, users: action.payload } //we send this once the data is fetched. remember that payload = data.
     case 'USER_LIST_FAIL':
       return { loading: false, error: action.payload }
+    case 'USER_LIST_RESET':
+      return { users: [] }
+    default:
+      //always have a default
+      return state
+  }
+}
+
+export const userDeleteReducer = (state = {}, action) => {
+  switch (
+    action.type // this is where the reducer does things according to each type.
+  ) {
+    case 'USER_DELETE_REQUEST':
+      return { loading: true } //we send loading: true to let the component know it's fetching the data
+    case 'USER_DELETE_SUCCESS':
+      return { loading: false, success: true } //we send this once the data is fetched. remember that payload = data.
+    case 'USER_DELETE_FAIL':
+      return { loading: false, error: action.payload }
     default:
       //always have a default
       return state
