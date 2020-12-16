@@ -57,3 +57,19 @@ export const orderListMyReducer = (state = { orders: [] }, action) => {
       return state
   }
 }
+
+export const orderListReducer = (state = { orders: [] }, action) => {
+  switch (
+    action.type // this is where the reducer does things according to each type.
+  ) {
+    case 'ORDER_LIST_REQUEST':
+      return { loading: true } //we send loading: true to let the component know it's fetching the data
+    case 'ORDER_LIST_SUCCESS':
+      return { loading: false, orders: action.payload } //we send this once the data is fetched. remember that payload = data.
+    case 'ORDER_LIST_FAIL':
+      return { loading: false, error: action.payload }
+    default:
+      //always have a default
+      return state
+  }
+}
