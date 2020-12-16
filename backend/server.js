@@ -2,6 +2,7 @@ import express from 'express' // changed require to import from ecmascript. adde
 import dotenv from 'dotenv' // dependency used to separate secrets from your source code. MAKE SURE .env IS IN .gitignore
 import path from 'path' //path is a nodejs module to work with file paths
 import connectDB from './config/db.js'
+import morgan from 'morgan' // logger for whenever a route gets hi
 import { notFound, errorHandler } from './middleware/errorMiddleware.js'
 import productRoutes from './routes/productRoutes.js'
 import userRoutes from './routes/userRoutes.js'
@@ -13,6 +14,10 @@ dotenv.config() // this is just required to be able to run dotenv
 connectDB()
 
 const app = express()
+
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev')) // only set for development mode
+}
 
 app.use(express.json()) // allows us to accept json data in the body
 
