@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import axios from 'axios'
 import { Link } from 'react-router-dom'
 import { Form, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
@@ -15,6 +16,28 @@ const ProductEditScreen = ({ match, history }) => {
   const [category, setCategory] = useState('')
   const [countInStock, setCountInStock] = useState(0)
   const [description, setDescription] = useState('')
+  const [uploading, setUploading] = useState(false) //this is just like any other loading state we use. we set true when making our request and set it back to false when request is done
+
+  const uploadFileHandler = async (e) => {
+    const file = e.target.files[0] //you can upload multiple files which gives u access to this files array, but we only want 1 file so we get 1st index
+    const formData = new FormData()
+    formData.append('image', file)
+    setUploading(true)
+
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+      const { data } = await axios.post('/api/upload', formData, config)
+      setImage(data) //the data we get back is the path which is why we use setImage here
+      setUploading(false)
+    } catch (error) {
+      console.error(error)
+      setUploading(false)
+    }
+  }
 
   const submitHandler = (e) => {
     e.preventDefault()
@@ -106,6 +129,13 @@ const ProductEditScreen = ({ match, history }) => {
                 value={image}
                 onChange={(e) => setImage(e.target.value)}
               ></Form.Control>
+              <Form.File
+                id='image-file'
+                label='Choose file'
+                custom
+                onChange={uploadFileHandler}
+              ></Form.File>
+              {uploading && <h2>Uploading...</h2>}
             </Form.Group>
             <Form.Group controlId='brand'>
               <Form.Label>Brand</Form.Label>
