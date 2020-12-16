@@ -55,7 +55,7 @@ const OrderListScreen = ({ history }) => {
                 <td>{order._id}</td>
                 <td>{order.user && order.user.name}</td>
                 <td>{order.createdAt.substring(0, 10)}</td>
-                {/* where does this createdAt come from? */}
+                {/* createdAt comes directly from mongodb */}
                 <td>${order.totalPrice}</td>
                 <td>
                   {order.paidAt ? order.paidAt.substring(0, 10) : 'Not paid'}
