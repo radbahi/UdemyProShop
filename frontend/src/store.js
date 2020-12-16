@@ -7,6 +7,7 @@ import {
   productListReducer,
   productDetailsReducer,
   productDeleteReducer,
+  productCreateReducer,
 } from './reducers/productReducers.js'
 import { cartReducer } from './reducers/cartReducers.js'
 import {
@@ -30,6 +31,7 @@ const reducer = combineReducers({
   productList: productListReducer, //the productList part of the state then gets the data from productListReducer...
   productDetails: productDetailsReducer, //...as well as anything else passed in here
   productDelete: productDeleteReducer,
+  productCreate: productCreateReducer,
   cart: cartReducer,
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,

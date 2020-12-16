@@ -2,7 +2,11 @@ import { useEffect } from 'react'
 import { LinkContainer } from 'react-router-bootstrap'
 import { Table, Button, Row, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import { listProducts, deleteProduct } from '../actions/productActions'
+import {
+  listProducts,
+  deleteProduct,
+  createProduct,
+} from '../actions/productActions'
 
 const ProductListScreen = ({ history, match }) => {
   const dispatch = useDispatch()
@@ -17,16 +21,35 @@ const ProductListScreen = ({ history, match }) => {
     success: successDelete,
   } = productDelete
 
+  const productCreate = useSelector((state) => state.productCreate)
+  const {
+    loading: loadingCreate,
+    error: errorCreate,
+    success: successCreate,
+    product: createdProduct,
+  } = productCreate
+
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin // MIGHT BE A PROBLEM WITH THE WAY WE HAVE THE USER REDUCER LABELED
 
   useEffect(() => {
-    if (userInfo && userInfo.isAdmin) {
-      dispatch(listProducts())
-    } else {
+    dispatch({ type: 'PRODUCT_CREATE_RESET' })
+    if (!userInfo.isAdmin) {
       history.push('/login')
     }
-  }, [dispatch, history, userInfo, successDelete])
+    if (successCreate) {
+      history.push(`/admin/product/${createdProduct._id}/edit`)
+    } else {
+      dispatch(listProducts())
+    }
+  }, [
+    dispatch,
+    history,
+    userInfo,
+    successDelete,
+    successCreate,
+    createdProduct,
+  ])
 
   const deleteHandler = (id) => {
     if (window.confirm('Delete this product? THIS ACTION IS IRREVERSIBLE.')) {
@@ -34,8 +57,8 @@ const ProductListScreen = ({ history, match }) => {
     }
   }
 
-  const createProductHandler = (product) => {
-    //CREATE PRODUCT
+  const createProductHandler = () => {
+    dispatch(createProduct())
   }
 
   return (
@@ -51,7 +74,9 @@ const ProductListScreen = ({ history, match }) => {
         </Col>
       </Row>
       {loadingDelete && <h3>Loading...</h3>}
-      {errorDelete && <h3>{error}</h3>}
+      {errorDelete && <h3>{errorDelete}</h3>}
+      {loadingCreate && <h3>Loading...</h3>}
+      {errorCreate && <h3>{errorCreate}</h3>}
       {loading ? (
         <h3>Loading...</h3>
       ) : error ? (
