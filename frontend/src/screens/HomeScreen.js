@@ -6,7 +6,9 @@ import { Row, Col } from 'react-bootstrap'
 // import axios from 'axios' //powerful library for fetches, but we're not using it here this time
 import { listProducts } from '../actions/productActions'
 
-const HomeScreen = () => {
+const HomeScreen = ({ match }) => {
+  const keyword = match.params.keyword // remember we set this to keyword in App.js in the route
+
   const dispatch = useDispatch()
 
   const productList = useSelector((state) => state.productList) //name this variable as the same part of state you want for consistency. go to store.js and look at the combineReducers.
@@ -28,8 +30,8 @@ const HomeScreen = () => {
 
   // read old useEffect above for information on how we used to fetch the product data
   useEffect(() => {
-    dispatch(listProducts()) // now this should just fill our state
-  }, [dispatch])
+    dispatch(listProducts(keyword)) // now this should just fill our state
+  }, [dispatch, keyword])
 
   return (
     <>

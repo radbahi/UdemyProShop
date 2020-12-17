@@ -6,7 +6,12 @@ import Product from '../models/productModel.js'
 //@route GET /api/products
 //@access public
 const getProducts = asyncHandler(async (req, res) => {
-  const products = await Product.find({}) // remember that all mongoose methods return a promise so use async/await
+  const keyword = req.query.keyword
+    ? { name: { $regex: req.query.keyword, $options: 'i' } }
+    : {} //req.query is how you get query strings, aka anything after the ? in the URL
+  //using $regex lets it search up partially correct terms and $options: 'i' makes it case insensitive
+
+  const products = await Product.find({ ...keyword }) // remember that all mongoose methods return a promise so use async/await
   res.json(products)
 })
 
