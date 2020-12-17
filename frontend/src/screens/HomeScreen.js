@@ -1,6 +1,8 @@
 import { useEffect } from 'react' // useState hook is to use state in functional components since only class components have constructor
 // whatever is in useEffect runs as soon as the component loads. good for api fetches
 import Product from '../components/Product'
+import Paginate from '../components/Paginate'
+import ProductCarousel from '../components/ProductCarousel'
 import { useDispatch, useSelector } from 'react-redux' //useDispatch for calling in actions, useSelector for using specific parts of global state
 import { Row, Col } from 'react-bootstrap'
 // import axios from 'axios' //powerful library for fetches, but we're not using it here this time
@@ -9,10 +11,12 @@ import { listProducts } from '../actions/productActions'
 const HomeScreen = ({ match }) => {
   const keyword = match.params.keyword // remember we set this to keyword in App.js in the route
 
+  const pageNumber = match.params.pageNumber || 1
+
   const dispatch = useDispatch()
 
   const productList = useSelector((state) => state.productList) //name this variable as the same part of state you want for consistency. go to store.js and look at the combineReducers.
-  const { loading, error, products } = productList // destructuring all possible things from this state to evaluate later in this component.
+  const { loading, error, products, page, pages } = productList // destructuring all possible things from this state to evaluate later in this component.
 
   // const [products, setProducts] = useState([]) // not needed since we're using redux
 
@@ -30,11 +34,12 @@ const HomeScreen = ({ match }) => {
 
   // read old useEffect above for information on how we used to fetch the product data
   useEffect(() => {
-    dispatch(listProducts(keyword)) // now this should just fill our state
-  }, [dispatch, keyword])
+    dispatch(listProducts(keyword, pageNumber)) // now this should just fill our state
+  }, [dispatch, keyword, pageNumber])
 
   return (
     <>
+      {!keyword && <ProductCarousel />}
       <h1>Latest products</h1>
       {/* look at ternary statement below. if loading, return Loading... if error, return error else return row with data */}
       {loading ? (
@@ -42,14 +47,21 @@ const HomeScreen = ({ match }) => {
       ) : error ? (
         <h3>{error}</h3>
       ) : (
-        <Row>
-          {products.map((product) => (
-            <Col key={product._id} sm={12} md={6} lg={4}>
-              <Product product={product} />
-              {/* pass in product as props above. the product variable is coming from the map method above */}
-            </Col>
-          ))}
-        </Row>
+        <>
+          <Row>
+            {products.map((product) => (
+              <Col key={product._id} sm={12} md={6} lg={4}>
+                <Product product={product} />
+                {/* pass in product as props above. the product variable is coming from the map method above */}
+              </Col>
+            ))}
+          </Row>
+          <Paginate
+            pages={pages}
+            page={page}
+            keyword={keyword ? keyword : ''}
+          />
+        </>
       )}
     </>
   )

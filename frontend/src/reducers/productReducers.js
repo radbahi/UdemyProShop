@@ -10,7 +10,12 @@ export const productListReducer = (state = { products: [] }, action) => {
     case 'PRODUCT_LIST_REQUEST':
       return { loading: true, products: [] } //we send loading: true to let the component know it's fetching the data
     case 'PRODUCT_LIST_SUCCESS':
-      return { loading: false, products: action.payload } //we send this once the data is fetched. remember that payload = data.
+      return {
+        loading: false,
+        products: action.payload.products,
+        pages: action.payload.pages,
+        page: action.payload.page,
+      } //we send this once the data is fetched. remember that payload = data.
     case 'PRODUCT_LIST_FAIL':
       return { loading: false, error: action.payload }
     default:
@@ -102,6 +107,22 @@ export const productReviewCreateReducer = (state = {}, action) => {
       return { loading: false, error: action.payload }
     case 'PRODUCT_CREATE_REVIEW_RESET':
       return {}
+    default:
+      //always have a default
+      return state
+  }
+}
+
+export const productTopRatedReducer = (state = { products: [] }, action) => {
+  switch (
+    action.type // this is where the reducer does things according to each type.
+  ) {
+    case 'PRODUCT_TOP_REQUEST':
+      return { loading: true, products: [] }
+    case 'PRODUCT_TOP_SUCCESS':
+      return { loading: false, products: action.payload }
+    case 'PRODUCT_TOP_FAIL':
+      return { loading: false, error: action.payload }
     default:
       //always have a default
       return state

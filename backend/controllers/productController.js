@@ -6,13 +6,19 @@ import Product from '../models/productModel.js'
 //@route GET /api/products
 //@access public
 const getProducts = asyncHandler(async (req, res) => {
+  const page = Number(req.query.pageNumber) || 1
+
   const keyword = req.query.keyword
     ? { name: { $regex: req.query.keyword, $options: 'i' } }
     : {} //req.query is how you get query strings, aka anything after the ? in the URL
   //using $regex lets it search up partially correct terms and $options: 'i' makes it case insensitive
 
-  const products = await Product.find({ ...keyword }) // remember that all mongoose methods return a promise so use async/await
-  res.json(products)
+  const count = await Product.countDocuments({ ...keyword })
+
+  const products = await Product.find({ ...keyword })
+    .limit(10)
+    .skip(10 * (page - 1)) //10 products per page
+  res.json({ products, page, pages: Math.ceil(count / 10) })
 })
 
 //@desc fetch single product
@@ -139,6 +145,14 @@ const createProductReview = asyncHandler(async (req, res) => {
   }
 })
 
+//@desc get top rated products
+//@route GET /api/products/top
+//@access public
+const getTopProducts = asyncHandler(async (req, res) => {
+  const products = await Product.find({}).sort({ rating: -1 }).limit(3)
+  res.json(products)
+})
+
 export {
   getProducts,
   getProductById,
@@ -146,4 +160,5 @@ export {
   createProduct,
   updateProduct,
   createProductReview,
+  getTopProducts,
 }

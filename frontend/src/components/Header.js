@@ -2,7 +2,7 @@ import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../actions/userActions'
-import SearchBox, { searchBox } from './SearchBox'
+import SearchBox from './SearchBox'
 import { Route } from 'react-router-dom'
 
 const Header = () => {
