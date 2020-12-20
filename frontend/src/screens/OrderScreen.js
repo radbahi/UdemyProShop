@@ -1,7 +1,15 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { PayPalButton } from 'react-paypal-button-v2'
-import { Row, Col, ListGroup, Image, Card, Button } from 'react-bootstrap'
+import {
+  Row,
+  Col,
+  ListGroup,
+  Image,
+  Card,
+  Button,
+  Alert,
+} from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import {
@@ -82,7 +90,7 @@ const OrderScreen = ({ match, history }) => {
   return loading ? (
     <h1>Loading...</h1>
   ) : error ? (
-    <h1>{error}</h1>
+    <Alert variant='danger'>{error}</Alert>
   ) : (
     <>
       <h1>Order {order._id}</h1>
@@ -105,15 +113,11 @@ const OrderScreen = ({ match, history }) => {
                 {order.shippingAddress.country},
               </p>
               {order.isDelivered ? (
-                <h3
-                  style={{ color: 'darkgreen', backgroundColor: 'lightgreen' }}
-                >
+                <Alert variant='success'>
                   Delivered on {order.deliveredAt}
-                </h3>
+                </Alert>
               ) : (
-                <h3 style={{ color: 'red', backgroundColor: 'yellow' }}>
-                  Not Delivered
-                </h3>
+                <Alert variant='danger'>Not Delivered</Alert>
               )}
             </ListGroup.Item>
             <ListGroup.Item>
@@ -124,21 +128,15 @@ const OrderScreen = ({ match, history }) => {
                 {order.paymentMethod}
               </p>
               {order.isPaid ? (
-                <h3
-                  style={{ color: 'darkgreen', backgroundColor: 'lightgreen' }}
-                >
-                  Paid on {order.paidAt}
-                </h3>
+                <Alert variant='success'>Paid on {order.paidAt}</Alert>
               ) : (
-                <h3 style={{ color: 'red', backgroundColor: 'yellow' }}>
-                  Not paid
-                </h3>
+                <Alert variant='danger'>Not paid</Alert>
               )}
             </ListGroup.Item>
             <ListGroup.Item>
               <h2>Order items</h2>
               {order.orderItems.length === 0 ? (
-                <h3>Your order is empty.</h3>
+                <Alert variant='info'>Your order is empty.</Alert>
               ) : (
                 <ListGroup variant='flush'>
                   {order.orderItems.map((item, index) => (

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { Form, Button } from 'react-bootstrap'
+import { Form, Button, Alert } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import FormContainer from '../components/FormContainer'
 import { getUserDetails, updateUser } from '../actions/userActions.js'
@@ -54,11 +54,11 @@ const UserEditScreen = ({ match, history }) => {
       <FormContainer>
         <h1>Edit user</h1>
         {loadingUpdate && <h1>Loading...</h1>}
-        {errorUpdate && <h1>{errorUpdate}</h1>}
+        {errorUpdate && <Alert variant='danger'>{errorUpdate}</Alert>}
         {loading ? (
           <h1>Loading...</h1>
         ) : error ? (
-          <h1>{error}</h1>
+          <Alert variant='danger'>{error}</Alert>
         ) : (
           <Form onSubmit={submitHandler}>
             <Form.Group controlId='name'>

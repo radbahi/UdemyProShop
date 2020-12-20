@@ -68,6 +68,8 @@ export const userUpdateProfileReducer = (state = { user: {} }, action) => {
       return { loading: false, success: true, user: action.payload } //this was refactored to rename user as userInfo
     case 'USER_UPDATE_PROFILE_FAIL':
       return { loading: false, error: action.payload }
+    case 'USER_UPDATE_PROFILE_RESET':
+      return {}
     default:
       //always have a default
       return state

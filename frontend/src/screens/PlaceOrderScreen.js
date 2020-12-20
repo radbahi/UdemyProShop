@@ -1,5 +1,13 @@
 import { useEffect } from 'react'
-import { Row, Col, ListGroup, Image, Card, Button } from 'react-bootstrap'
+import {
+  Row,
+  Col,
+  ListGroup,
+  Image,
+  Card,
+  Button,
+  Alert,
+} from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import CheckoutSteps from '../components/CheckoutSteps'
@@ -75,7 +83,7 @@ const PlaceOrderScreen = ({ history }) => {
             <ListGroup.Item>
               <h2>Order items</h2>
               {cart.cartItems.length === 0 ? (
-                <h3>Your cart is empty.</h3>
+                <Alert variant='info'>Your cart is empty.</Alert>
               ) : (
                 <ListGroup variant='flush'>
                   {cart.cartItems.map((item, index) => (
@@ -130,7 +138,9 @@ const PlaceOrderScreen = ({ history }) => {
                   <Col>${cart.totalPrice}</Col>
                 </Row>
               </ListGroup.Item>
-              <ListGroup.Item>{error && <h3>{error}</h3>}</ListGroup.Item>
+              <ListGroup.Item>
+                {error && <Alert variant='danger'>{error}</Alert>}
+              </ListGroup.Item>
               <ListGroup.Item>
                 <Button
                   type='button'

@@ -1,6 +1,15 @@
 import { useState, useEffect } from 'react' // useState hook is to use state in functional components since only class components have constructor
 import { Link } from 'react-router-dom'
-import { Row, Col, Image, ListGroup, Button, Card, Form } from 'react-bootstrap'
+import {
+  Row,
+  Col,
+  Image,
+  ListGroup,
+  Button,
+  Card,
+  Form,
+  Alert,
+} from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Rating from '../components/Rating'
 // import axios from 'axios'
@@ -72,7 +81,7 @@ const ProductScreen = ({ history, match }) => {
       {loading ? (
         <h2>Loading...</h2>
       ) : error ? (
-        <h3>{error}</h3>
+        <Alert variant='danger'>{error}</Alert>
       ) : (
         <>
           <Row>
@@ -155,7 +164,9 @@ const ProductScreen = ({ history, match }) => {
           <Row>
             <Col md={6}>
               <h2>Reviews</h2>
-              {product.reviews.length === 0 && <h5>No reviews</h5>}
+              {product.reviews.length === 0 && (
+                <Alert variant='danger'>No reviews</Alert>
+              )}
               <ListGroup variant='flush'>
                 {product.reviews.map((review) => (
                   <ListGroup.Item key={review._id}>
@@ -167,7 +178,9 @@ const ProductScreen = ({ history, match }) => {
                 ))}
                 <ListGroup.Item>
                   <h2>Write a customer review</h2>
-                  {errorProductReview && <h4>{errorProductReview}</h4>}
+                  {errorProductReview && (
+                    <Alert variant='danger'>{errorProductReview}</Alert>
+                  )}
                   {userInfo ? (
                     <Form onSubmit={submitHandler}>
                       <Form.Group controlId='rating'>
@@ -199,13 +212,13 @@ const ProductScreen = ({ history, match }) => {
                       </Button>
                     </Form>
                   ) : (
-                    <h6>
+                    <Alert variant='info'>
                       Please{' '}
                       <Link style={{ color: 'blue' }} to='/login'>
                         Login
                       </Link>{' '}
                       to write a review
-                    </h6>
+                    </Alert>
                   )}
                 </ListGroup.Item>
               </ListGroup>

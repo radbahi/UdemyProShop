@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { Form, Button, Row, Col } from 'react-bootstrap'
+import { Form, Button, Row, Col, Alert } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import FormContainer from '../components/FormContainer'
 import { register } from '../actions/userActions.js'
@@ -45,12 +45,8 @@ const RegisterScreen = ({ location, history }) => {
   return (
     <FormContainer>
       <h1>Sign Up</h1>
-      {message && (
-        <h2 style={{ color: 'red', backgroundColor: 'yellow' }}>{message}</h2>
-      )}
-      {error && (
-        <h2 style={{ color: 'red', backgroundColor: 'yellow' }}>{error}</h2>
-      )}
+      {message && <Alert variant='danger'>{message}</Alert>}
+      {error && <Alert variant='danger'>{error}</Alert>}
       {loading && <h1>Loading...</h1>}
       <Form onSubmit={submitHandler}>
         <Form.Group controlId='name'>

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Form, Button, Row, Col, Table } from 'react-bootstrap'
+import { Form, Button, Row, Col, Table, Alert } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { getUserDetails, updateUserProfile } from '../actions/userActions.js'
@@ -44,31 +44,26 @@ const ProfileScreen = ({ history }) => {
     if (!userInfo) {
       //if user not logged in, redirect to login page
       history.push('/login')
-    } else if (!user.name) {
+    } else if (!user || !user.name || success) {
       //if no user details in state, get the details
+      dispatch({ type: 'USER_UPDATE_PROFILE_RESET' })
       dispatch(getUserDetails('profile'))
       dispatch(listMyOrders())
     } else {
       setName(user.name)
       setEmail(user.email)
     }
-  }, [dispatch, history, userInfo, user.name, user.email])
+  }, [dispatch, history, userInfo, user.name, user.email, success])
 
   return (
     <Row>
       <Col md={3}>
         <h2>User Profile</h2>
-        {message && (
-          <h2 style={{ color: 'red', backgroundColor: 'yellow' }}>{message}</h2>
-        )}
+        {message && <Alert variant='danger'>{message}</Alert>}
         {error && (
-          <h2 style={{ color: 'red', backgroundColor: 'yellow' }}>{error}</h2> //NEED TO MAKE THESE MESSAGES TIME OUT
+          <Alert variant='danger'>{error}</Alert> //NEED TO MAKE THESE MESSAGES TIME OUT
         )}
-        {success && (
-          <h2 style={{ color: 'darkgreen', backgroundColor: 'lightgreen' }}>
-            Profile updated
-          </h2>
-        )}
+        {success && <Alert variant='success'>Profile updated</Alert>}
         {loading && <h1>Loading...</h1>}
         <Form onSubmit={submitHandler}>
           <Form.Group controlId='name'>
@@ -117,7 +112,7 @@ const ProfileScreen = ({ history }) => {
         {loadingOrders ? (
           <h3>Loading orders...</h3>
         ) : errorOrders ? (
-          <h3>{errorOrders}</h3>
+          <Alert variant='danger'>{errorOrders}</Alert>
         ) : (
           <Table striped bordered hover responsive className='table-sm'>
             <thead>

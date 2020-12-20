@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { LinkContainer } from 'react-router-bootstrap'
-import { Table, Button } from 'react-bootstrap'
+import { Table, Button, Alert } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { listUsers, deleteUser } from '../actions/userActions'
 
@@ -35,7 +35,7 @@ const UserListScreen = ({ history }) => {
       {loading ? (
         <h3>Loading...</h3>
       ) : error ? (
-        <h3>{error}</h3>
+        <Alert variant='danger'>{error}</Alert>
       ) : (
         <Table striped bordered hover responsive className='table-sm'>
           <thead>

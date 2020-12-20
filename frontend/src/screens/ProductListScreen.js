@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { LinkContainer } from 'react-router-bootstrap'
-import { Table, Button, Row, Col } from 'react-bootstrap'
+import { Table, Button, Row, Col, Alert } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Paginate from '../components/Paginate'
 import {
@@ -78,13 +78,13 @@ const ProductListScreen = ({ history, match }) => {
         </Col>
       </Row>
       {loadingDelete && <h3>Loading...</h3>}
-      {errorDelete && <h3>{errorDelete}</h3>}
+      {errorDelete && <Alert variant='danger'>{errorDelete}</Alert>}
       {loadingCreate && <h3>Loading...</h3>}
-      {errorCreate && <h3>{errorCreate}</h3>}
+      {errorCreate && <Alert variant='danger'>{errorCreate}</Alert>}
       {loading ? (
         <h3>Loading...</h3>
       ) : error ? (
-        <h3>{error}</h3>
+        <Alert variant='danger'>{error}</Alert>
       ) : (
         <>
           <Table striped bordered hover responsive className='table-sm'>

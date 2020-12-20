@@ -4,7 +4,7 @@ import Product from '../components/Product'
 import Paginate from '../components/Paginate'
 import ProductCarousel from '../components/ProductCarousel'
 import { useDispatch, useSelector } from 'react-redux' //useDispatch for calling in actions, useSelector for using specific parts of global state
-import { Row, Col } from 'react-bootstrap'
+import { Row, Col, Alert } from 'react-bootstrap'
 // import axios from 'axios' //powerful library for fetches, but we're not using it here this time
 import { listProducts } from '../actions/productActions'
 
@@ -45,7 +45,7 @@ const HomeScreen = ({ match }) => {
       {loading ? (
         <h2>Loading...</h2>
       ) : error ? (
-        <h3>{error}</h3>
+        <Alert variant='danger'>{error}</Alert>
       ) : (
         <>
           <Row>

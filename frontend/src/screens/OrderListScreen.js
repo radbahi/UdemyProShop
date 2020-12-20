@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { LinkContainer } from 'react-router-bootstrap'
-import { Table, Button, Row, Col } from 'react-bootstrap'
+import { Table, Button, Row, Col, Alert } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { listOrders } from '../actions/orderActions'
 
@@ -29,14 +29,10 @@ const OrderListScreen = ({ history }) => {
         </Col>
         <Col className='text-right'></Col>
       </Row>
-      {/* {loadingDelete && <h3>Loading...</h3>}
-      {errorDelete && <h3>{errorDelete}</h3>}
-      {loadingCreate && <h3>Loading...</h3>}
-      {errorCreate && <h3>{errorCreate}</h3>} */}
       {loading ? (
         <h3>Loading...</h3>
       ) : error ? (
-        <h3>{error}</h3>
+        <Alert variant='danger'>{error}</Alert>
       ) : (
         <Table striped bordered hover responsive className='table-sm'>
           <thead>

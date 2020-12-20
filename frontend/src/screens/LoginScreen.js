@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { Form, Button, Row, Col } from 'react-bootstrap'
+import { Form, Button, Row, Col, Alert } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import FormContainer from '../components/FormContainer'
 import { login } from '../actions/userActions.js'
@@ -33,9 +33,7 @@ const LoginScreen = ({ location, history }) => {
   return (
     <FormContainer>
       <h1>Sign In</h1>
-      {error && (
-        <h2 style={{ color: 'red', backgroundColor: 'yellow' }}>{error}</h2>
-      )}
+      {error && <Alert variant='danger'>{error}</Alert>}
       {loading && <h1>Loading...</h1>}
       <Form onSubmit={submitHandler}>
         <Form.Group controlId='email'>
