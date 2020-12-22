@@ -21,11 +21,6 @@ if (process.env.NODE_ENV === 'development') {
 
 app.use(express.json()) // allows us to accept json data in the body
 
-// if we get a GET request to /, send API is running... to client
-app.get('/', (req, res) => {
-  res.send('API is running...')
-})
-
 app.use('/api/products', productRoutes)
 app.use('/api/users', userRoutes)
 app.use('/api/orders', orderRoutes)
@@ -38,6 +33,13 @@ app.get('/api/config/paypal', (req, res) =>
 
 const __dirname = path.resolve() //mimic actual __dirname to work with es6 syntax
 app.use('/uploads', express.static(path.join(__dirname, '/uploads'))) //this makes the uploads folder static. important for images.
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '/frontend/build'))) //if in production, setting frontend/build to static folder
+  app.get('*', (req, res) =>
+    res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'))
+  ) // this gets any routes that's not our api and points it to index.html
+}
 
 app.use(notFound)
 

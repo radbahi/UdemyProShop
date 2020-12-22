@@ -9,8 +9,8 @@ node_modules/
 # testing
 /coverage
 
-# production
-/build
+# production. we set up a heroku script to run build on heroku instead.
+/frontend/build
 
 # misc
 .DS_Store

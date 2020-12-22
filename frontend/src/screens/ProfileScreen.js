@@ -53,7 +53,7 @@ const ProfileScreen = ({ history }) => {
       setName(user.name)
       setEmail(user.email)
     }
-  }, [dispatch, history, userInfo, user.name, user.email, success])
+  }, [dispatch, history, userInfo, user, success])
 
   return (
     <Row>
