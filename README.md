@@ -1,5 +1,3 @@
-The Udemy Pro Shop is a project I made following along Brad Traversy's tutorial on an e-commerce MERN app found in https://www.udemy.com/share/103Cb6AEIfcVZSRHkB/.
-
 The app is a mock e-commerce website where you are able to "purchase" various gadgets. Users are able to: 
 - Create/edit their account and view their order history
 - Browse or search the website for items
